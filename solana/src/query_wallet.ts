@@ -1,5 +1,5 @@
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { clusterApiUrl, Connection, ParsedAccountData } from "@solana/web3.js";
+import { Connection, clusterApiUrl, ParsedAccountData } from "@solana/web3.js";
 
 (async () => {
   const MY_WALLET_ADDRESS =  "6TRbQrpBxsPtKj93eHsx8dCdVTFN2mLe99RKRbckjBqe";
