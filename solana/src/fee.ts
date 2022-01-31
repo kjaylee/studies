@@ -1,3 +1,4 @@
+//데이터 크기에 따른 렌트비 계산.
 import {
     Connection,
     clusterApiUrl,
