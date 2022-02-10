@@ -5,8 +5,13 @@
   "main": "index.js",
   "author": "kjaylee",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
-    "canvas": "^2.9.0"
+    "@types/d3": "^7.1.0",
+    "@types/topojson": "^3.2.3",
+    "canvas": "^2.9.0",
+    "d3": "^7.3.0",
+    "topojson": "^3.0.2"
   },
   "devDependencies": {
     "typescript": "^4.5.5"
