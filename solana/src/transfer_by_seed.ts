@@ -17,6 +17,7 @@ import * as web3 from '@solana/web3.js';
   await connection.confirmTransaction(airdropSignature);
   console.log(`wallet address: ${ wallet.publicKey.toString()}`)
   const seed = "한글도 되냐?";
+  //시드로 계정 생성 후, 0.1sol 보내기
   let publicKeyBySeed = await web3.PublicKey.createWithSeed(wallet.publicKey, seed, web3.SystemProgram.programId);
   console.log(publicKeyBySeed.toString());
   const tx = new web3.Transaction().add(
@@ -29,6 +30,7 @@ import * as web3 from '@solana/web3.js';
       space: 0,
       programId: web3.SystemProgram.programId,
     })
+    //시드로 생성된 계정에서 0.01을 다른 계정에 보내기 
   ).add(
     web3.SystemProgram.transfer({
       fromPubkey: publicKeyBySeed,

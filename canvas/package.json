@@ -1,0 +1,14 @@
+{
+  "name": "canvas",
+  "version": "1.0.0",
+  "description": "studies.",
+  "main": "index.js",
+  "author": "kjaylee",
+  "license": "MIT",
+  "dependencies": {
+    "canvas": "^2.9.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}

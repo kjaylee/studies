@@ -1,3 +1,4 @@
+//솔 전송
 import * as web3 from '@solana/web3.js';
 
 (async () => {

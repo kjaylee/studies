@@ -20,18 +20,24 @@ import * as spl from '@solana/spl-token';
     var alice = web3
         .Keypair
         .generate();
+    var bob = web3
+        .Keypair
+        .generate();
     // generate a new keypair for token account
-    const tokenAccount = web3.Keypair.generate();
+    const tokenAccount = web3
+        .Keypair
+        .generate();
     console.log(`feePayer account: ${feePayer.publicKey.toBase58()}`);
     console.log(`mint account: ${mint.publicKey.toBase58()}`);
     console.log(`alice account: ${alice.publicKey.toBase58()}`);
+    console.log(`bob account: ${bob.publicKey.toBase58()}`);
     console.log(`token account: ${tokenAccount.publicKey.toBase58()}`);
     // calculate ATA
     let ata = await spl.Token.getAssociatedTokenAddress(
         spl.ASSOCIATED_TOKEN_PROGRAM_ID, // always ASSOCIATED_TOKEN_PROGRAM_ID
         spl.TOKEN_PROGRAM_ID, // always TOKEN_PROGRAM_ID
         mint.publicKey, // mint
-        alice.publicKey // owner
+        bob.publicKey // owner
     );
     console.log(`ATA: ${ata.toBase58()}`);
     let tx = new web3
@@ -75,7 +81,7 @@ import * as spl from '@solana/spl-token';
                 spl.TOKEN_PROGRAM_ID, // always TOKEN_PROGRAM_ID
                 mint.publicKey, // mint
                 ata, // ata
-                alice.publicKey, // owner of token account
+                bob.publicKey, // owner of token account
                 feePayer.publicKey // fee payer
             ),
             spl.Token.createMintToInstruction(
@@ -85,10 +91,20 @@ import * as spl from '@solana/spl-token';
                 alice.publicKey, // mint authority
                 [], // only multisig account will use. leave it empty now.
                 1e8 // amount. if your decimals is 8, you mint 10^8 for 1 token.
+            ),
+            spl.Token.createTransferCheckedInstruction(
+                spl.TOKEN_PROGRAM_ID, // always TOKEN_PROGRAM_ID
+                tokenAccount.publicKey, // from (should be a token account)
+                mint.publicKey, // mint
+                ata, // to (should be a token account)
+                alice.publicKey, // owner of from
+                [], // for multisig account, leave empty.
+                1e8, // amount, if your deciamls is 8, send 10^8 for 1 token
+                8 // decimals
             )
         );
     console.log(
-        `txhash: ${await connection.sendTransaction(tx, [feePayer, mint, feePayer, tokenAccount, feePayer, feePayer, alice])}`
+        `txhash: ${await connection.sendTransaction(tx, [feePayer, mint, feePayer, tokenAccount, feePayer, feePayer, alice, feePayer, alice])}`
     );
     // 1. use getParsedAccountInfo
     {
